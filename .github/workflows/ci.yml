@@ -1,1 +1,52 @@
+name: Enterprise Performance Engineering with GitHub Actions CI integration
 
+on:
+  [workflow_dispatch]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    name: start a performance test
+    env:
+      lre_username: ${{ secrets.LRE_USERNAME }}
+      lre_password: ${{ secrets.LRE_PASSWORD }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@4
+        with:
+          distribution: adopt
+          java-version: '11'
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Use My GitHub Action
+        uses: MicroFocus/lre-gh-action@v1.0.3
+        with:
+          lre_action: ExecuteLreTest
+          lre_description: running new yaml test
+          lre_server: lreorgdemo.saas.microfocus.com/LRE/?tenant=63acd16e-6797-431a-b734-788ab1ef1db9
+          lre_https_protocol: true
+          lre_authenticate_with_token: true
+          lre_domain: DEFAULT
+          lre_project: sdundar_project
+          lre_test: 182
+          lre_test_instance: AUTO
+          lre_timeslot_duration_hours: 0
+          lre_timeslot_duration_minutes: 30
+          lre_post_run_action: Collate and Analyze
+          lre_vuds_mode: false
+          lre_trend_report: ASSOCIATED
+          lre_status_by_sla: false
+          lre_output_dir: ${{ github.workspace }}
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifacts
+          path: ${{ github.workspace }}/LreResult
+      
