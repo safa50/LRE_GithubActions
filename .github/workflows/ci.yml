@@ -40,7 +40,6 @@ jobs:
           lre_timeslot_duration_minutes: 30
           lre_post_run_action: Collate and Analyze
           lre_vuds_mode: false
-          lre_trend_report: ASSOCIATED
           lre_status_by_sla: false
           lre_output_dir: ${{ github.workspace }}
 
