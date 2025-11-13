@@ -31,7 +31,7 @@ jobs:
           lre_description: running new yaml test
           lre_server: lreorgdemo.saas.microfocus.com/LRE/?tenant=63acd16e-6797-431a-b734-788ab1ef1db9
           lre_https_protocol: true
-          lre_authenticate_with_token: true
+          lre_authenticate_with_token: false
           lre_domain: DEFAULT
           lre_project: sdundar_project
           lre_test: 182
